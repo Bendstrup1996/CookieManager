@@ -50,7 +50,7 @@ public class CookieManager : MonoBehaviour {
     public GameObject gameOverCanvas;
 
     [Header("Quit")]
-    public string gameOverURL = "http://u3d.as/11ta";
+    public string gameOverURL = "";
 
     public int clickValue = 1;
 
@@ -60,7 +60,7 @@ public class CookieManager : MonoBehaviour {
     private float levelBonus = 10.0f;
     private float levelBonusMulti = 1.0f;
     private int levelBonusCookies = 1;
-    private int levelBonusSub = 5;
+    private int levelBonusSub = 5; //XXX1 BONUS SCORE VALUE
     private float levelCps = 0.0f;
 
     private float gameTimer = 0.0f;
@@ -85,18 +85,6 @@ public class CookieManager : MonoBehaviour {
 
     void Start()
     {
-        public void ShowLeaderboards()
-        {
-            PlayServices.instance.ShowLeaderboardsUI();
-        }
-
-        public void ShowAchievements()
-        {
-            PlayServices.instance.ShowAchievementsUI();
-        }
-    }
-    
-    {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
 #if UNITY_WEBGL
@@ -112,6 +100,10 @@ public class CookieManager : MonoBehaviour {
 
     void Update()
     {
+        if (cookiesScore >= 1000)
+        {
+            PlayServices.instance.UnlockAchievement(GPGSIds.achievement_kageklikkers1);
+        }
         gameTimer += Time.deltaTime;
         if ((!isGameOver) && (!isGamePaused))  //FIX 0.9.3 Update only when !isGameOver OR !isGamePaused
         {
@@ -126,19 +118,6 @@ public class CookieManager : MonoBehaviour {
             }
         }
     }
-
-    public void Update()
-    {
-        if (Score >= 1000)
-        PlayServices.instance.UnlockAchievement(GPGSIds.achievment_Kage klikkers 1);
-    }
-
-    public void SaveScore()
-    {
-        PlayServices.instance.AddScoreToLeaderboard(GPGSIds.leaderboard_score_leaderboard, score);
-        score = 0;
-    }
-}
 
     public void UpdateInput()
     {
@@ -182,13 +161,13 @@ public class CookieManager : MonoBehaviour {
             if (raycastHit2D.collider.tag == "Bonus")
             {
                 PlaySound(gameBonusClickSound[Random.Range(0, gameBonusClickSound.Length)]);
-                UpdateScore(clickValue * levelBonusSub);
+                UpdateScore(clickValue * levelBonusSub); //XXX1 UPDATE BONUS SCORE
                 Vector3 spawnBonusPos = raycastHit2D.collider.gameObject.transform.position;
                 GameObject newBonusParticle = (GameObject)(Instantiate(bonusParticles, spawnBonusPos, Quaternion.identity));
                 Destroy(newBonusParticle, 1.0f);
                 Destroy(raycastHit2D.collider.gameObject);
                 GameObject newBonusText = (GameObject)(Instantiate(scoreBonus, spawnBonusPos, Quaternion.identity));
-                newBonusText.GetComponent<ScoreBonus>().SetScoreValue(clickValue * levelBonusSub);
+                newBonusText.GetComponent<ScoreBonus>().SetScoreValue(clickValue * levelBonusSub); //XXX1 DISPLAY BONUS SCORE
             }
             else if (raycastHit2D.collider.tag == "Cookie")
             {
@@ -370,6 +349,13 @@ public class CookieManager : MonoBehaviour {
     }
 
     public void GameOver()
+
+    void SaveScore()
+    {
+        PlayServices.instance.AddScoreToLeaderboard(GPGSIds.leaderboard_score_leaderboard, cookieScore);
+        cookiescore = 0;
+    }
+    
     {
         ButtonSound();
         isGameOver = true; //FIX 0.9.3 SET isGameOver to TRUE
