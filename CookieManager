@@ -114,7 +114,6 @@ public class CookieManager : MonoBehaviour {
                 levelCps = 0;
                 gameTimer = 0;
                 UpdateGameData();
-
             }
         }
     }
@@ -349,14 +348,9 @@ public class CookieManager : MonoBehaviour {
     }
 
     public void GameOver()
-
-    void SaveScore()
     {
-        PlayServices.instance.AddScoreToLeaderboard(GPGSIds.leaderboard_score_leaderboard, cookieScore);
-        cookiescore = 0;
-    }
-    
-    {
+        PlayServices.instance.AddScoreToLeaderboards(id,cookieScore);
+        cookieScore = 0;
         ButtonSound();
         isGameOver = true; //FIX 0.9.3 SET isGameOver to TRUE
         ShowGameOverMenu();
