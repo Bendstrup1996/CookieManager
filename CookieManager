@@ -347,6 +347,16 @@ public class CookieManager : MonoBehaviour {
         //XXXX DisplayBanner(true);
     }
 
+    public void ShowLeaderboard()
+    {
+        PlayServices.instance.ShowLeaderboardsUI();
+    }
+
+    public void ShowAchievements()
+    {
+        PlayServices.instance.ShovAchievementsUI();
+    }
+
     public void GameOver()
     {
         PlayServices.instance.AddScoreToLeaderboard(GPGSIds.leaderboard_score_leaderboard, cookiesScore);
