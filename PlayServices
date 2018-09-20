@@ -11,6 +11,7 @@ public class PlayServices : MonoBehaviour {
    // Use this for initialization
     void Start ()
     {
+        instance = this;
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
             .Build();
 
