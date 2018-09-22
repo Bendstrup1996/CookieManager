@@ -180,6 +180,7 @@ public class CookieManager : MonoBehaviour {
 
     public void UpdateScore(int scoreValue)
     {
+        PlayServices.instance.AddScoreToLeaderboard(GPGSIds.leaderboard_kage_klikkers_leaderboard, cookiesScore);
         cookiesScore += scoreValue;
         UpdateGameData();
         UpdateBonusData(scoreValue);
@@ -273,8 +274,8 @@ public class CookieManager : MonoBehaviour {
     {
         if (!isGameOver)
         {
-            gameCookiesText.text = cookiesScore.ToString() + " Cookies!";
-            gameCpsText.text = levelCps.ToString("N1") + " per second";
+            gameCookiesText.text = cookiesScore.ToString() + " Kager!";
+            gameCpsText.text = levelCps.ToString("N1") + " Par Second";
         }
         else
         {
@@ -359,8 +360,6 @@ public class CookieManager : MonoBehaviour {
 
     public void GameOver()
     {
-        PlayServices.instance.AddScoreToLeaderboard(GPGSIds.leaderboard_score_leaderboard, cookiesScore);
-        cookiesScore = 0;
         ButtonSound();
         isGameOver = true; //FIX 0.9.3 SET isGameOver to TRUE
         ShowGameOverMenu();
