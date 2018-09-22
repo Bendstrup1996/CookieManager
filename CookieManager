@@ -100,10 +100,6 @@ public class CookieManager : MonoBehaviour {
 
     void Update()
     {
-        if (cookiesScore >= 1000)
-        {
-            PlayServices.instance.UnlockAchievement(GPGSIds.achievement_kageklikkers1);
-        }
         gameTimer += Time.deltaTime;
         if ((!isGameOver) && (!isGamePaused))  //FIX 0.9.3 Update only when !isGameOver OR !isGamePaused
         {
@@ -182,6 +178,30 @@ public class CookieManager : MonoBehaviour {
     {
         PlayServices.instance.AddScoreToLeaderboard(GPGSIds.leaderboard_kage_klikkers_leaderboard, cookiesScore);
         cookiesScore += scoreValue;
+        // Check if we unlocked an achievement
+        switch (cookiesScore)
+        {
+            case 1000:
+                PlayServices.instance.UnlockAchievement(GPGSIds.achievement_kageklikkers1);
+                break;
+            case 3000:
+                PlayServices.instance.UnlockAchievement(GPGSIds.achievement_kageklikkers2);
+                break;
+            case 6000:
+                PlayServices.instance.UnlockAchievement(GPGSIds.achievement_kageklikkers3);
+                break;
+            case 9000:
+                PlayServices.instance.UnlockAchievement(GPGSIds.achievement_kageklikkers4);
+                break;
+            case 50000:
+                PlayServices.instance.UnlockAchievement(GPGSIds.achievement_kageklikkers5);
+                break;
+            case 100000:
+                PlayServices.instance.UnlockAchievement(GPGSIds.achievement_kageklikkers6);
+                break;
+            default:
+                break;
+        }
         UpdateGameData();
         UpdateBonusData(scoreValue);
         SaveGameData();
@@ -274,7 +294,7 @@ public class CookieManager : MonoBehaviour {
     {
         if (!isGameOver)
         {
-            gameCookiesText.text = cookiesScore.ToString() + " Kager!";
+            gameCookiesText.text = cookiesScore.ToString("N0") + " Kager!";
             gameCpsText.text = levelCps.ToString("N1") + " Par Second";
         }
         else
